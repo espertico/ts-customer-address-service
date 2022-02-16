@@ -1,0 +1,15 @@
+{
+    "name": "customer-address-service",
+    "version": "1.0.3",
+    "title": "Customer Address Service",
+    "description": "stores customer addresses",
+    "host": "customer-address-service-host.com",
+    "path": "/customer-address-service",
+    "color": "blue",
+    "contactDetails": {
+        "firstName": "PLEASE_FILL",
+        "lastName": "PLEASE_FILL",
+        "email": "PLEASE_FILL"
+    },
+    "tags": []
+}
