@@ -2,48 +2,41 @@
 import { CustomerService } from './customer-service';
 import { customLogger, Logger } from '../../middleware/logging-middleware';
 
+function DeleteAddressException(message) {
+    this.message = message;
+    this.name = "DeleteAddressException";
+  }
+
 export class customerServiceServiceImpl implements CustomerService {
     logger: Logger;
 
     constructor() {
         this.logger = new customLogger();
-        this.logger.setComponent('customerServiceService');
     }
 
     public  addressCreate() {
-        const logger = this.logger.setOperation('addressCreate');
-        logger.context({ additional: 'info' }).info(
-            'Address successfully created'
-        );
-        logger.info('this log message shall be found $addressId')
+        const addressId = 'ID77'
+        this.logger.info('creating address with addressID: ${addressId}')
         return {
-            addressId: '77',
+            addressId: addressId,
         };
+    }
+
+    public  addressRetrieve() {
+        const address =  {
+            name: 'Max Power',
+            creditcard: '4678-3456-1673-7799',
+            city: 'London',
+            countryCode: 'GB',
+            street: 'diagon alley',
+            houseNumber: '7',
+            zipCode: '77777',
+        }
+        this.logger.debug('$address')
+        return { address };
     }
     public  addressDelete() {
-        const logger = this.logger.setOperation('addressDelete');
-        logger.context({ additional: 'info' }).err({ err: 'err' }).info(
-            'Address successfully deleted'
-        );
-        return {
-        };
-    }
-    public  addressRetrieve() {
-        const logger = this.logger.setOperation('addressRetrieve');
-        logger.context({ additional: 'info' }).err({ err: 'err' }).info(
-            'Trying to retrieve Address'
-        );
-        logger.context({ additional: 'info' }).err({ err: 'err' }).info(
-            'Address successfully retireved'
-        );
-        return {
-            address: {
-                city: 'London',
-                countryCode: 'GB',
-                street: 'diagon alley',
-                houseNumber: '7',
-                zipCode: '77777',
-            },
-        };
+        this.logger.error('Address not found');
+        throw new DeleteAddressException('Address not found')
     }
 }

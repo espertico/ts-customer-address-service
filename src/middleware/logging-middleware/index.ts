@@ -16,9 +16,10 @@ export interface Logger {
     setOperation(obj: string)
     context(obj: any): Logger
     err(obj: any): Logger
-    info(message: string)
-    error(message: string)
-    warn(message: string)
+    info(message: string, obj?: any)
+    error(message: string, obj?: any)
+    warn(message: string, obj?: any)
+    debug(message: string, obj?: any)
 }
 
 // inspired by https://stackoverflow.com/questions/14837558/nodejs-winston-logging-with-multiple-arguments
@@ -63,15 +64,19 @@ export class customLogger implements Logger {
     }
 
     // wrapping the winston function to allow for multiple arguments
-    info(msg: string) {
+    debug(msg: string, obj?: any) {
+        this.logger.debug(msg, { tracingId: this.tracingId, context: this.ctxObj });
+    }
+
+    info(msg: string, obj?: any) {
         this.logger.info(msg, { tracingId: this.tracingId, context: this.ctxObj });
     }
 
-    error(msg: string) {
+    error(msg: string, obj?: any) {
         this.logger.error(msg, { tracingId: this.tracingId, context: this.ctxObj });
     }
 
-    warn(msg: string) {
+    warn(msg: string, obj?: any) {
         this.logger.warn(msg, { tracingId: this.tracingId, context: this.ctxObj });
     }
 }
